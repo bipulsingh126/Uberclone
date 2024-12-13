@@ -320,3 +320,126 @@ Register a new captain in the system.
 - Passwords are hashed before storage.
 - A JWT token is generated and returned upon successful registration.
 - The returned captain object does not include the password field.
+
+# Captain Routes Documentation
+
+## POST /register
+### Request Body
+```json
+{
+  "email": "string", // Required: Must be a valid email format
+  "fullname": {
+    "firstname": "string" // Required: Must be at least 3 characters long
+    "lastname": "string" // Optional: Can be included, no length requirement
+  },
+  "password": "string", // Required: Must be at least 6 characters long
+  "vehicle": {
+    "color": "string", // Required: Must be at least 3 characters long
+    "plate": "string", // Required: Must be at least 3 characters long
+    "capacity": 1, // Required: Must be an integer, at least 1
+    "vehicleType": "string" // Required: Must be one of ["car", "motorcycle", "truck"]
+  }
+}
+```
+
+### Response
+#### Success (201)
+```json
+{
+  "success": true,
+  "data": {
+    "captain": {
+      // Captain object details (e.g., id, email, etc.)
+    }
+  }
+}
+```
+
+#### Error (400)
+```json
+{
+  "success": false,
+  "errors": [
+    {
+      "msg": "Error message", // Description of the validation error
+      "param": "field_name" // The field that caused the error
+    }
+  ]
+}
+```
+
+---
+
+## POST /login
+### Request Body
+```json
+{
+  "email": "string", // Required: Must be a valid email format
+  "password": "string" // Required: Must be at least 6 characters long
+}
+```
+
+### Response
+#### Success (200)
+```json
+{
+  "success": true,
+  "data": {
+    "captain": {
+      // Captain object details (e.g., id, email, etc.)
+    }
+  }
+}
+```
+
+#### Error (400)
+```json
+{
+  "success": false,
+  "message": "Invalid email or password" // General error message
+}
+```
+
+---
+
+## GET /profile
+### Response
+#### Success (200)
+```json
+{
+  "success": true,
+  "data": {
+    "captain": {
+      // Captain object details (e.g., id, email, etc.)
+    }
+  }
+}
+```
+
+#### Error (401)
+```json
+{
+  "success": false,
+  "message": "Unauthorized" // If the user is not authenticated
+}
+```
+
+---
+
+## GET /logout
+### Response
+#### Success (200)
+```json
+{
+  "success": true,
+  "message": "Logged out successfully" // Confirmation of logout
+}
+```
+
+#### Error (401)
+```json
+{
+  "success": false,
+  "message": "Unauthorized" // If the user is not authenticated
+}
+```
