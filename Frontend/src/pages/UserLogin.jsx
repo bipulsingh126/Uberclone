@@ -1,86 +1,140 @@
-import React from 'react'
-import { InboxIcon as EnvelopeIcon, LockOpenIcon as LockClosedIcon } from 'lucide-react'
-
+import React, { useState } from 'react'
+import { FcGoogle } from 'react-icons/fc'
+import { FaTwitter } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 const UserLogin = () => {
-    return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 bg-gradient-to-br from-gray-100 to-gray-200 py-12 px-4 sm:px-6 lg:px-8" style={{ backgroundImage: 'url("https://example.com/background.jpg")', backgroundSize: 'cover' }}>
-            <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-xl shadow-lg">
-                <div className="flex justify-center mb-6">
-                    <img className='w-14 rounded-full shadow-lg' src="https://logos-world.net/wp-content/uploads/2020/05/Uber-Logo.png" alt="Uber Logo" />
-                </div>
-                <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Login to your account</h2>
-                <form className="mt-8 space-y-6">
-                    <div className="rounded-md shadow-sm -space-y-px">
-                        <div>
-                            <label htmlFor="email-address" className="sr-only">Email address</label>
-                            <div className="relative">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <EnvelopeIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                </div>
-                                <input
-                                    id="email-address"
-                                    name="email"
-                                    type="email"
-                                    autoComplete="email"
-                                    required
-                                    className="appearance-none rounded-none relative block w-full px-3 py-2 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                    placeholder="Email address"
-                                />
-                            </div>
-                        </div>
-                        <div>
-                            <label htmlFor="password" className="sr-only">Password</label>
-                            <div className="relative">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <LockClosedIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                </div>
-                                <input
-                                    id="password"
-                                    name="password"
-                                    type="password"
-                                    autoComplete="current-password"
-                                    required
-                                    className="appearance-none rounded-none relative block w-full px-3 py-2 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                    placeholder="Password"
-                                />
-                            </div>
-                        </div>
-                    </div>
+  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('')
+  const [userData, setUserData] = useState({})
 
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-                            <input
-                                id="remember-me"
-                                name="remember-me"
-                                type="checkbox"
-                                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                            />
-                            <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">Remember me</label>
-                        </div>
+  const submitHandler = (e) => {
+    e.preventDefault()
+    setUserData({
+      email: email,
+      password: password,
+    })
+    setEmail('')
+    setPassword('')
+  }
+  const handleGoogleLogin = () => {
+    // Replace 'YOUR_GOOGLE_CLIENT_ID' with your actual Google OAuth client ID
+    const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?
+      client_id=YOUR_GOOGLE_CLIENT_ID&
+      redirect_uri=${encodeURIComponent(
+        window.location.origin + '/auth/google/callback',
+      )}&
+      scope=email profile&
+      response_type=code`
 
-                        <div className="text-sm">
-                            <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">Forgot your password?</a>
-                        </div>
-                    </div>
+    window.location.href = googleAuthUrl
+  }
 
-                    <div>
-                        <button
-                            type="submit"
-                            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out shadow-lg"
-                        >
-                            <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                                <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
-                            </span>
-                            Login
-                        </button>
-                    </div>
-                </form>
-                <div className="text-red-500 text-sm text-center">
-                    {/* Display error messages here */}
-                </div>
-            </div>
+  const handleTwitterLogin = () => {
+    // Replace 'YOUR_TWITTER_CLIENT_ID' with your actual Twitter OAuth client ID
+    const twitterAuthUrl = `https://twitter.com/i/oauth2/authorize?
+      client_id=YOUR_TWITTER_CLIENT_ID&
+      redirect_uri=${encodeURIComponent(
+        window.location.origin + '/auth/twitter/callback',
+      )}&
+      scope=tweet.read users.read&
+      response_type=code&
+      state=state`
+
+    window.location.href = twitterAuthUrl
+  }
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="max-w-md w-full space-y-8 p-8">
+        <div className="text-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="80"
+            height="80"
+            viewBox="0 0 24 24"
+            className="mx-auto"
+          >
+            <path
+              d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.85 7h10.29l1.08 3.11H5.77L6.85 7zM19 17H5v-5h14v5z"
+              fill="black"
+            />
+            <circle cx="7.5" cy="14.5" r="1.5" />
+            <circle cx="16.5" cy="14.5" r="1.5" />
+          </svg>
+          <h2 className="mt-2 text-3xl font-bold">UBER</h2>
+          <p className="mt-2 text-gray-600">Welcome back!</p>
         </div>
-    )
+
+        <form className="mt-8 space-y-6" onSubmit={(e) => submitHandler(e)}>
+          <div className="space-y-4">
+            <div>
+              <input
+                type="email"
+                name="email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value)
+                }}
+                placeholder="name@email.com"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                required
+              />
+            </div>
+
+            <div>
+              <input
+                type="password"
+                name="password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value)
+                }}
+                placeholder="Password"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-2 px-4 bg-black text-white rounded-md hover:bg-gray-800"
+            >
+              Log in
+            </button>
+          </div>
+        </form>
+
+        <div className="text-center">
+          <p className="text-sm text-gray-600">
+            Don't have an account?{' '}
+            <Link to="/signup" className="text-blue-600 hover:underline">
+              Sign up
+            </Link>
+          </p>
+
+          <div className="mt-4 text-center text-gray-500">or</div>
+
+          <div className="mt-4 space-y-3">
+            <button
+              onClick={handleGoogleLogin}
+              className="w-full py-2 px-4 border border-gray-300 rounded-md flex items-center justify-center space-x-2 hover:bg-gray-50"
+            >
+              <FcGoogle className="text-xl" />
+              <span>Continue with Google</span>
+            </button>
+
+            <button
+              onClick={handleTwitterLogin}
+              className="w-full py-2 px-4 border border-gray-300 rounded-md flex items-center justify-center space-x-2 hover:bg-gray-50"
+            >
+              <FaTwitter className="text-xl text-blue-400" />
+              <span>Continue with Twitter</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default UserLogin

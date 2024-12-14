@@ -11,14 +11,16 @@ Currently, two official plugins are available:
 
 ## Overview
 
-This project is a React application built with Vite, providing a minimal setup for developing a web application with modern features like Hot Module Replacement (HMR) and ESLint rules.
+This project is a React application built with Vite, implementing an Uber-like interface with separate authentication flows for users and captains (drivers).
 
 ## Project Structure
 
 - **src/**: Contains all the source code for the application.
   - **pages/**: Contains the main pages of the application.
-    - **UserLogin.jsx**: The login page for users.
-    - **Home.jsx**: The home page that welcomes users.
+    - **Home.jsx**: Landing page with Uber branding
+    - **UserLogin.jsx**: Login page for passengers
+    - **UserSignup.jsx**: Registration page for new passengers
+    - **CaptainLogin.jsx**: Login page for drivers/captains
 
 ## Getting Started
 
@@ -56,17 +58,66 @@ Open your browser and navigate to `http://localhost:3000` to see the application
 
 ## Components
 
-### UserLogin
-
-The `UserLogin` component allows users to log into their accounts. It includes fields for email and password, as well as a "Remember me" checkbox.
-
 ### Home
+The landing page component that displays:
+- Uber logo
+- Background image of a taxi scene
+- "Get Started with Uber" call-to-action
+- Navigation link to login page
 
-The `Home` component serves as the landing page for the application, providing a link to the login page.
+### UserLogin
+User authentication component for passengers with features:
+- Email and password login form
+- Social login options (Google and Twitter)
+- Link to signup page
+- Form validation
+- Remember me option
+
+### UserSignup
+User registration component for new passengers featuring:
+- Name, email, and password fields
+- Password visibility toggle
+- Social signup options (Google and Twitter)
+- Form validation
+- Navigation to login page
+
+### CaptainLogin
+Driver/Captain authentication component with:
+- Email and password login form
+- Social login options (Google and Twitter)
+- Remember me functionality
+- Form validation
+- Specialized UI for drivers
+
+## Authentication Features
+
+### Social Login Integration
+Both user and captain login pages support:
+- Google OAuth authentication
+- Twitter OAuth authentication
+
+### Form Validation
+All authentication forms include:
+- Required field validation
+- Email format validation
+- Password field security
+
+## Styling
+
+The application uses:
+- Tailwind CSS for styling
+- Responsive design
+- Custom SVG icons
+- Consistent color scheme and branding
 
 ## Contributing
 
-If you would like to contribute to this project, please fork the repository and submit a pull request.
+If you would like to contribute to this project:
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Submit a pull request
 
 ## License
 
